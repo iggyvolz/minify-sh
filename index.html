@@ -1,0 +1,6 @@
+for lib in `ldd $1|awk '{print $1;}'`; do
+    if test `echo "$lib" | grep -E '^/'`; then
+        # Full path
+        cp $lib "$2/lib/`basename $lib`"
+    fi
+done
