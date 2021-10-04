@@ -1,6 +1,11 @@
-for lib in `ldd $1|awk '{print $1;}'`; do
+#!/bin/sh
+mkdir -p "$2/lib"
+mkdir -p "$2/bin"
+ln -sf "./lib" "$2/lib64"
+ln -sf "." "$2/usr"
+cp "$1" "$2/bin/`basename $1`"
+for lib in `ldd $1|awk '{print $3;}'`; do
     if test `echo "$lib" | grep -E '^/'`; then
-        mkdir -p "$2/lib"
-        cp $lib "$2/lib/`basename $lib`"
+        cp "$lib" "$2/lib/`basename $lib`"
     fi
 done
